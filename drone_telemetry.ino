@@ -42,12 +42,19 @@ void movePosition(double distance) {
   lat = toDeg(lat2);
   lon = toDeg(lon2);
 }
-
+uint8_t secureRandom() {
+  uint8_t r = 0;
+  for(int i=0;i<8;i++){
+    r <<= 1;
+    r |= analogRead(A0) & 1;
+  }
+  return r;
+}
 // Generate AES key & IV randomly
 void generateAESKey() {
   for(int i=0; i<16; i++){
-    aesKey[i] = random(0, 256);
-    aesIv[i] = random(0, 256);
+    aesKey[i] = secureRandom();
+    aesIv[i] = secureRandom();
   }
 }
 
